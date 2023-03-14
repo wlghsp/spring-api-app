@@ -1,4 +1,4 @@
-package com.app.global.config.web.jpa;
+package com.app.global.config.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
