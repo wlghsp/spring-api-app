@@ -24,7 +24,7 @@ public class TokenManager {
     private final String refreshTokenExpireTime;
     private final String tokenSecret;
 
-    public JwtTokenDto createTokenDto(Long memberId, Role role) {
+    public JwtTokenDto createJwtTokenDto(Long memberId, Role role) {
         Date accessTokenExpireTime = createAccessTokenExpireTime();
         Date refreshTokenExpireTime = createRefreshTokenExpireTime();
 
@@ -55,7 +55,7 @@ public class TokenManager {
                 .setExpiration(expirationTime)       // 토큰 만료 시간
                 .claim("memberId", memberId)   // 회원 아이디
                 .claim("role", role)           // 유저 role
-                .signWith(SignatureAlgorithm.ES512, tokenSecret.getBytes(StandardCharsets.UTF_8))
+                .signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
                 .setHeaderParam("type", "JWT")
                 .compact();
 
@@ -68,7 +68,7 @@ public class TokenManager {
                 .setIssuedAt(new Date())             // 토큰 발급 시간
                 .setExpiration(expirationTime)       // 토큰 만료 시간
                 .claim("memberId", memberId)   // 회원 아이디
-                .signWith(SignatureAlgorithm.ES512, tokenSecret.getBytes(StandardCharsets.UTF_8))
+                .signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
                 .setHeaderParam("type", "JWT")
                 .compact();
 
