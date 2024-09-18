@@ -1,5 +1,6 @@
 package com.app.global.config.web;
 
+import com.app.global.interceptor.AdminAuthorizationInterceptor;
 import com.app.global.interceptor.AuthenticationInterceptor;
 import com.app.global.resolver.memberinfo.MemberInfoArgumentResolver;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    private final AdminAuthorizationInterceptor adminAuthorizationInterceptor;
     private final AuthenticationInterceptor authenticationInterceptor;
     private final MemberInfoArgumentResolver memberInfoArgumentResolver;
 
@@ -43,6 +45,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/access-token/issue",
                         "/api/logout",
                         "/api/health");
+
+        registry.addInterceptor(adminAuthorizationInterceptor)
+                .order(2)
+                .addPathPatterns("/api/admin/**");
     }
 
     @Override
